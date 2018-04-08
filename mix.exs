@@ -39,6 +39,8 @@ defmodule Stormchat.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:comeonin, "~> 4.0"},
+      {:argon2_elixir, "~> 1.2"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"}
     ]
