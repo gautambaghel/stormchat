@@ -13,13 +13,22 @@
 
   <body>
 
-       <%= if logged_in?(@conn) do %>
+    <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+    <%= if logged_in?(@conn) do %>
          <li><%= current_user(@conn).name %></li>
          <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></li>
-       <% else %>
+    <% else %>
          <li><%= link "Login",    to: "/login" %></li>
          <li><%= link "Register", to: user_path(@conn, :new) %></li>
-       <% end %>
+    <% end %>
+
 
     <div class="container">
       <%= if get_flash(@conn, :info) do %>
