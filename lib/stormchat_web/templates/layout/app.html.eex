@@ -13,21 +13,32 @@
 
   <body>
 
-    <nav class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Products</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Storm Chat</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#">Features</a>
+          <a class="nav-item nav-link" href="#">Pricing</a>
+        </div>
 
     <%= if logged_in?(@conn) do %>
-         <li><%= current_user(@conn).name %></li>
-         <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></li>
+         <div class="ml-auto">
+           <a class="list-unstyled px-2"><%= current_user(@conn).name %></a>
+           <a class="list-unstyled pr-2"><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></a>
+         </div>
     <% else %>
-         <li><%= link "Login",    to: "/login" %></li>
-         <li><%= link "Register", to: user_path(@conn, :new) %></li>
+         <div class="ml-auto">
+           <li class="list-unstyled px-2"><%= link "Login",    to: "/login" %></li>
+           <li class="list-unstyled pr-2"><%= link "Register", to: user_path(@conn, :new) %></li>
+         </div>
     <% end %>
+
+  </div>
+</nav>
 
 
     <div class="container">

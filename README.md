@@ -1,5 +1,11 @@
 # Stormchat
 
+* App monitors the NWS alerts feed at https://alerts.weather.gov/
+* Each alert creates a chatroom / realtime comment feed. - Chat messages are stored in the DB forever.
+* Users can chat about the alert in the chatroom.
+* Users can sign up for emails when new alerts in their area happen.
+
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
