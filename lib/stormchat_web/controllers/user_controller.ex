@@ -8,7 +8,8 @@ defmodule StormchatWeb.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    render conn, changeset: changeset
+    locations = [%{name: "Massachusetts", short_form: "MA"}]
+    render conn, changeset: changeset, locations: locations
   end
 
 
@@ -26,4 +27,3 @@ defmodule StormchatWeb.UserController do
   end
 
 end
-

@@ -26,8 +26,8 @@
   </div>
 
   <div class="form-group">
-    <label>Location</label>
-    <%= text_input f, :location, class: "form-control" %>
+    <label>Location</label><br>
+    <%= select f, :location , Enum.map(@locations, &{&1.name, &1.short_form}) %>
     <%= error_tag f, :location %>
   </div>
 

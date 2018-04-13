@@ -1,5 +1,5 @@
 defmodule Stormchat.Session do
-  
+
   alias Stormchat.Accounts
 
   def login(params) do
@@ -18,8 +18,6 @@ defmodule Stormchat.Session do
   def logged_in?(conn), do: !!current_user(conn)
 
   defp authenticate(user, password) do
-    IO.inspect user
-    IO.inspect password
     case user do
       nil -> false
       _   -> Comeonin.Argon2.checkpw(password, user.crypted_password)
