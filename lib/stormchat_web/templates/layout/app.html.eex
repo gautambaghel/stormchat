@@ -14,31 +14,34 @@
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
       <a class="navbar-brand" href="#">Storm Chat</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <div class="nav navbar-nav">
           <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link" href="#">Features</a>
           <a class="nav-item nav-link" href="#">Pricing</a>
         </div>
+      </div>
 
-    <%= if logged_in?(@conn) do %>
-         <div class="ml-auto">
-           <a class="list-unstyled px-2"><%= current_user(@conn).name %></a>
-           <a class="list-unstyled pr-2"><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></a>
-         </div>
-    <% else %>
-         <div class="ml-auto">
-           <li class="list-unstyled px-2"><%= link "Login",    to: "/login" %></li>
-           <li class="list-unstyled pr-2"><%= link "Register", to: user_path(@conn, :new) %></li>
-         </div>
-    <% end %>
 
-  </div>
-</nav>
+    <div class="collapse navbar-collapse">
+      <div class="nav navbar-nav navbar-right">
+        <%= if logged_in?(@conn) do %>
+             <a class="nav-item nav-link"><%= current_user(@conn).name %></a>
+             <a class="nav-item nav-link"><%= link "Logout", to: session_path(@conn, :delete), method: :delete %></a>
+        <% else %>
+           <a class="nav-item nav-link"><%= link "Login",    to: "/login" %></a>
+           <a class="nav-item nav-link"><%= link "Register", to: user_path(@conn, :new) %></a>
+        <% end %>
+      </div>
+    </div>
+
+    </div>
+   </nav>
 
 
     <div class="container">
