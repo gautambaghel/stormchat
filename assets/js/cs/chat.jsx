@@ -14,5 +14,31 @@ export default function chat_init(store) {
 
 
 let Chat = connect((state) => state)((props) => {
-  return ( <div> <p> React App running </p> </div> );
+  let posts = _.map(props.posts, (pp) => <Post key={pp.id} post={pp} />);
+  return (
+    <div>
+     <table className="table">
+      <thead>
+       <tr>
+        <th>Username</th>
+        <th>Post</th>
+      </tr>
+    </thead>
+    <tbody>
+    { posts }
+     </tbody>
+    </table>
+   </div>
+  );
 });
+
+
+function Post(params) {
+  let post = params.post;
+  return (
+    <tr>
+        <td>{ post.username }</td>
+        <td>{ post.body }</td>
+    </tr>
+  );
+}

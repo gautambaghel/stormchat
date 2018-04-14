@@ -28,6 +28,9 @@ import api from './api';
 function init() {
   let topic = window.current_topic;
   if(typeof topic != 'undefined') {
+    let topicArr = topic.split('/');
+    let arrLen = topicArr.length - 1;
+    topic = topicArr[arrLen];
     api.request_posts(topic);
     chat_init(store);
   }

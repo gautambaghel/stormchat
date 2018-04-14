@@ -32,8 +32,8 @@ defmodule Seeds do
     b = Repo.insert!(%User{ email: "bob@gmail.com", name: "bob", crypted_password: p, location: "MA" })
 
     Repo.delete_all(Post)
-    Repo.insert!(%Post{ alert: "nws123", body: "Any one need help?", user: a })
-    Repo.insert!(%Post{ alert: "nws123", body: "Yeah, stuck here!", user: b })
+    Repo.insert!(%Post{ alert: "NWS-IDP-PROD-2768387-2582650", body: "Any one need help?", user: a })
+    Repo.insert!(%Post{ alert: "NWS-IDP-PROD-2768387-2582650", body: "Yeah, stuck here!", user: b })
 
   end
 end

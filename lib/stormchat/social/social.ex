@@ -24,6 +24,7 @@ defmodule Stormchat.Social do
   def list_posts_by_topic(topic) do
     from(p in Post, where: p.alert == ^topic)
      |> Repo.all()
+     |> Repo.preload(:user)
   end
 
   @doc """
