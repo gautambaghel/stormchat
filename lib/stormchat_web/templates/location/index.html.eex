@@ -1,0 +1,18 @@
+<h2>Listing Locations</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Abbreviation</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for location <- @locations do %>
+    <tr>
+      <td><%= location.name %></td>
+      <td><%= location.abb %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

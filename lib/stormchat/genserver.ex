@@ -1,4 +1,4 @@
-defmodule CallAPI do
+defmodule Stormchat.CallAPI do
   use GenServer
 
    # Client

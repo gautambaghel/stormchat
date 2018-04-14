@@ -35,7 +35,7 @@ TODO STUFF HERE
 
     <div class="form-group">
       <label>Location</label><br>
-      <%= select f, :location , Enum.map(@locations, &{&1.name, &1.short_form}) %>
+      <%= select f, :location , Enum.map(@locations, &{&1.name, &1.abb}) %>
       <%= error_tag f, :location %>
     </div>
 

@@ -3,12 +3,13 @@ defmodule StormchatWeb.UserController do
 
   alias Stormchat.Accounts
   alias Stormchat.Accounts.User
+  alias Stormchat.Locations
 
   action_fallback StormchatWeb.FallbackController
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    locations = [%{name: "Massachusetts", short_form: "MA"}]
+    locations = Locations.list_locations
     render conn, changeset: changeset, locations: locations
   end
 

@@ -18,6 +18,7 @@ defmodule StormchatWeb.Router do
 
     get "/", PageController, :index
 
+    resources "/locations", LocationController, only: [:index]
     resources "/registration", UserController
 
     get    "/login",  SessionController, :new
