@@ -31,8 +31,8 @@ defmodule StormchatWeb.PageController do
     end
   end
 
-  def alert(conn, %{"id" => id}) do
-        render conn, "alert.html", id: id
+  def chat(conn, %{"id" => id}) do
+        render conn, "chat.html", id: id
   end
 
 end

@@ -11,7 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
+import "phoenix_html";
 
 // Import local files
 //
@@ -20,11 +20,17 @@ import "phoenix_html"
 
 // import socket from "./socket"
 
-import chat_init from "./chat";
+import chat_init from "./cs/chat";
+
+import store from './store';
+import api from './api';
 
 function init() {
-  let root = document.getElementById('react-chat');
-  chat_init(root);
+  let topic = window.current_topic;
+  if(typeof topic != 'undefined') {
+    api.request_posts(topic);
+    chat_init(store);
+  }
 }
 
 // Use jQuery to delay until page loaded.

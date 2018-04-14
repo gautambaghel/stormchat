@@ -17,7 +17,7 @@ defmodule StormchatWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/chats", PageController, :alert
+    get "/chats", PageController, :chat
 
     resources "/locations", LocationController, only: [:index]
     resources "/registration", UserController

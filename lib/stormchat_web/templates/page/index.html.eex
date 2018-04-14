@@ -14,18 +14,19 @@
     </tr>
   </thead>
 
-  <tbody>
-<%= for alert <- @alerts do %>
-  <tr>
+ <tbody>
+  <%= for alert <- @alerts do %>
+   <tr>
     <td><%= alert["properties"]["headline"] %></td>
     <td><%= alert["properties"]["areaDesc"] %></td>
     <td><%= alert["properties"]["certainty"] %></td>
     <td><%= alert["properties"]["severity"] %></td>
+    
     <td class="text-right">
-        <span><%= link "Join", to: page_path(@conn, :alert , alert), class: "btn btn-primary btn-xs" %></span>
+        <span><%= link "Join", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
     </td>
-  </tr>
-<% end %>
+   </tr>
+ <% end %>
 
 </tbody>
 </table>
