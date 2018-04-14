@@ -17,6 +17,7 @@ defmodule StormchatWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/chats", PageController, :alert
 
     resources "/locations", LocationController, only: [:index]
     resources "/registration", UserController
@@ -28,7 +29,9 @@ defmodule StormchatWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", StormchatWeb do
-  #   pipe_through :api
-  # end
+   scope "/api/v1", StormchatWeb do
+     pipe_through :api
+     resources "/posts/:topic", PostController, except: [:new, :edit]
+   end
+
 end

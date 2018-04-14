@@ -37,6 +37,7 @@ defmodule Stormchat.Locations do
   """
   def get_location!(id), do: Repo.get!(Location, id)
 
+  def get_by_abbr!(abbr), do: Repo.get_by(Location, abb: abbr)
   @doc """
   Creates a location.
 

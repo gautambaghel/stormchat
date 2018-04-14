@@ -19,3 +19,13 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+import chat_init from "./chat";
+
+function init() {
+  let root = document.getElementById('react-chat');
+  chat_init(root);
+}
+
+// Use jQuery to delay until page loaded.
+$(init);

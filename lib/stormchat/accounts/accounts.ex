@@ -20,11 +20,6 @@ defmodule Stormchat.Accounts do
   end
 
   def create_user(attrs \\ %{}) do
-
-    %User{}
-    |> User.changeset(attrs)
-    |> IO.inspect
-
     %User{}
     |> User.changeset(attrs)
     |> put_change(:crypted_password, hashed_password(attrs["password"]))
