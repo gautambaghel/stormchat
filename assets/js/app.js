@@ -42,10 +42,11 @@ function init() {
 function keep_fetching_posts(topic) {
   if(typeof topic != 'undefined') {
     api.request_posts(topic);
-  }
+
    setTimeout(function () {
      keep_fetching_posts(topic);
    }, 1500);
+ }
 }
 
 // Use jQuery to delay until page loaded.
