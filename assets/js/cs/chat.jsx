@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 import { Provider, connect } from 'react-redux';
 
+import PostForm from './post-form';
+
 export default function chat_init(store) {
   ReactDOM.render(
     <Provider store={store}>
-      <Chat state={store.getState()} />
+      <Chat state={store.getState()} identity={store.identity} />
     </Provider>,
     document.getElementById('react-chat'),
   );
@@ -15,8 +17,10 @@ export default function chat_init(store) {
 
 let Chat = connect((state) => state)((props) => {
   let posts = _.map(props.posts, (pp) => <Post key={pp.id} post={pp} />);
+  let params = props.identity;
   return (
     <div>
+     <PostForm params={params}/>
      <table className="table">
       <thead>
        <tr>

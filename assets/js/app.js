@@ -27,11 +27,14 @@ import api from './api';
 
 function init() {
   let topic = window.current_topic;
+  let id = window.current_id;
+
   if(typeof topic != 'undefined') {
     let topicArr = topic.split('/');
     let arrLen = topicArr.length - 1;
     topic = topicArr[arrLen];
     api.request_posts(topic);
+    store.identity = {topic: topic, user_id: id};
     chat_init(store);
   }
 }

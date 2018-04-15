@@ -2,7 +2,8 @@
   <div class="col">
     <h3><%= @alert["headline"] %></h3>
     <script>
-      window.current_topic = "<%= @id %>";
+      window.current_topic = "<%= @alert_id %>";
+      window.current_id = "<%= @user_id %>";
     </script>
     <div id="react-chat">
       <p>React app not loaded...</p>

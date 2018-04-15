@@ -20,9 +20,27 @@ import deepFreeze from 'deep-freeze';
   }
 }
 
+
+let empty_form = {
+  user_id: "",
+  body: "",
+  alert: "",
+};
+
+function form(state = empty_form, action) {
+  switch (action.type) {
+    case 'UPDATE_FORM':
+      return Object.assign({}, state, action.data);
+    case 'CLEAR_FORM':
+      return empty_form;
+    default:
+      return state;
+  }
+}
+
 function root_reducer(state0, action) {
   // {posts: posts}
-  let reducer = combineReducers({posts});
+  let reducer = combineReducers({posts, form});
   let state1 = reducer(state0, action);
   return deepFreeze(state1);
 };

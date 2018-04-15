@@ -32,7 +32,8 @@ defmodule StormchatWeb.PageController do
   end
 
   def chat(conn, %{"id" => id, "properties" => properties}) do
-        render conn, "chat.html", id: id, alert: properties
+        user_id = conn |> get_session(:current_user)
+        render conn, "chat.html", alert_id: id, alert: properties, user_id: user_id
   end
 
 end
