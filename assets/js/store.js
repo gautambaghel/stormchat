@@ -13,7 +13,7 @@ import deepFreeze from 'deep-freeze';
   switch (action.type) {
   case 'POSTS_LIST':
     return [...action.posts];
-  case 'ADD_POSTS':
+  case 'ADD_POST':
     return [action.post, ...state];
   default:
     return state;

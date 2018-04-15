@@ -17,9 +17,6 @@ defmodule Stormchat.Social do
       [%Post{}, ...]
 
   """
-  def list_posts do
-    Repo.all(Post)
-  end
 
   def list_posts_by_topic(topic) do
     from(p in Post, where: p.alert == ^topic)
@@ -41,7 +38,10 @@ defmodule Stormchat.Social do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(id) do
+    Repo.get!(Post, id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a post.

@@ -22,7 +22,6 @@ class TheServer {
      contentType: "application/json; charset=UTF-8",
      data: JSON.stringify({ post: data }),
      success: (resp) => {
-       console.log(resp);
        store.dispatch({
          type: 'ADD_POST',
          post: resp.data,

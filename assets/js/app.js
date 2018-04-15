@@ -33,10 +33,19 @@ function init() {
     let topicArr = topic.split('/');
     let arrLen = topicArr.length - 1;
     topic = topicArr[arrLen];
-    api.request_posts(topic);
+    keep_fetching_posts(topic)
     store.identity = {topic: topic, user_id: id};
     chat_init(store);
   }
+}
+
+function keep_fetching_posts(topic) {
+  if(typeof topic != 'undefined') {
+    api.request_posts(topic);
+  }
+   setTimeout(function () {
+     keep_fetching_posts(topic);
+   }, 1500);
 }
 
 // Use jQuery to delay until page loaded.

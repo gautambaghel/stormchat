@@ -21,7 +21,7 @@
     <td><%= alert["properties"]["areaDesc"] %></td>
     <td><%= alert["properties"]["certainty"] %></td>
     <td><%= alert["properties"]["severity"] %></td>
-    
+
     <td class="text-right">
         <span><%= link "Join", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
     </td>
