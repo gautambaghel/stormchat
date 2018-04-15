@@ -13,13 +13,12 @@ defmodule StormchatWeb.PostController do
 
   def create(conn, %{"post" => post_params}) do
 
-    conn = fetch_session(conn)
-    user_id = conn |> get_session(:current_user) |> Kernel.inspect
+    user_id = conn |> fetch_session |> get_session(:current_user) |> Kernel.inspect
     if post_params["user_id"] != user_id do
       IO.inspect({:bad_match, post_params["user_id"], user_id})
       raise "hax!"
     end
-    
+
     with {:ok, %Post{} = post} <- Social.create_post(post_params) do
       conn
       |> put_status(:created)
