@@ -14,19 +14,19 @@ defmodule StormchatWeb.PostController do
   def create(conn, %{"post" => post_params}) do
 
     user_id = conn |> fetch_session |> get_session(:current_user) |> Kernel.inspect
-
-    if post_params["user_id"] != user_id do
-      IO.inspect({:bad_match, post_params["user_id"], user_id})
-      raise "hax!"
-    end
-
-    with {:ok, %Post{} = post} <- Social.create_post(post_params) do
-      post = Social.get_post!(post.id)
-      topic = post.alert
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", post_path(conn, :show, topic, post))
-      |> render("show.json", post: post)
+    cond do
+      post_params["user_id"] != user_id ->
+        IO.inspect({:bad_match, post_params["user_id"], user_id})
+        conn |> render("error.json", msg: "Hax!")
+      true ->
+        with {:ok, %Post{} = post} <- Social.create_post(post_params) do
+          post = Social.get_post!(post.id)
+          topic = post.alert
+          conn
+          |> put_status(:created)
+          |> put_resp_header("location", post_path(conn, :show, topic, post))
+          |> render("show.json", post: post)
+        end
     end
   end
 

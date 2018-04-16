@@ -22,10 +22,14 @@ class TheServer {
      contentType: "application/json; charset=UTF-8",
      data: JSON.stringify({ post: data }),
      success: (resp) => {
-       store.dispatch({
-         type: 'ADD_POST',
-         post: resp.data,
-       });
+       if(typeof resp.error != 'undefined') {
+         document.location.href = "/";
+       } else {
+         store.dispatch({
+           type: 'ADD_POST',
+           post: resp.data,
+         });
+       }
      },
    });
   }

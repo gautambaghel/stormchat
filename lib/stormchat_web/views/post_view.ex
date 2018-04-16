@@ -16,4 +16,9 @@ defmodule StormchatWeb.PostView do
       username: post.user.name,
       alert: post.alert}
   end
+
+  def render("error.json", %{msg: msg}) do
+      %{error: msg}
+  end
+
 end
