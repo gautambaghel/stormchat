@@ -27,13 +27,18 @@ defmodule StormchatWeb.PageController do
          {_, data} = CallAPI.get_weather(pid, user.location)
          data = Poison.decode!(data)
          data = data["features"]
-         render conn, "index.html", user: user, location: location, alerts: data
+
+         dataMap = Enum.reduce data, %{}, fn x, acc ->
+            Map.put(acc, x["properties"]["id"], x["properties"])
+         end
+
+         render conn, "index.html", user: user, location: location, alerts: dataMap
     end
   end
 
-  def chat(conn, %{"id" => id, "properties" => properties}) do
+  def chat(conn, %{"id" => id, "headline" => headline}) do
         user_id = conn |> get_session(:current_user)
-        render conn, "chat.html", alert_id: id, alert: properties, user_id: user_id
+        render conn, "chat.html", alert_id: id, headline: headline, user_id: user_id
   end
 
 end

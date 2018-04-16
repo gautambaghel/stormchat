@@ -15,12 +15,12 @@
   </thead>
 
  <tbody>
-  <%= for alert <- @alerts do %>
+  <%= for {key, alert} <- @alerts do %>
    <tr>
-    <td><%= alert["properties"]["headline"] %></td>
-    <td><%= alert["properties"]["areaDesc"] %></td>
-    <td><%= alert["properties"]["certainty"] %></td>
-    <td><%= alert["properties"]["severity"] %></td>
+    <td><%= alert["headline"] %></td>
+    <td><%= alert["areaDesc"] %></td>
+    <td><%= alert["certainty"] %></td>
+    <td><%= alert["severity"] %></td>
 
     <td class="text-right">
         <span><%= link "Join", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
