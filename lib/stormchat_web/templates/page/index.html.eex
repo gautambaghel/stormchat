@@ -20,7 +20,14 @@
     <td><%= alert["headline"] %></td>
     <td><%= alert["areaDesc"] %></td>
     <td><%= alert["certainty"] %></td>
-    <td><%= alert["severity"] %></td>
+    <%= case alert["severity"] do %>
+    <%= "Severe" -> %>
+    <td style="color: red;" ><%= alert["severity"] %></td>
+    <%= "Moderate" ->%>
+    <td style="color: orangeRed;" ><%= alert["severity"] %></td>
+    <%= "Minor" ->%>
+    <td style="color: orange;" ><%= alert["severity"] %></td>
+    <%= end %>
 
     <td class="text-right">
         <span><%= link "Join", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
