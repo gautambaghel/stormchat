@@ -44,7 +44,8 @@ defmodule Stormchat.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1", override: true},
+      {:mailgun, "~> 0.1.2"}
     ]
   end
 
