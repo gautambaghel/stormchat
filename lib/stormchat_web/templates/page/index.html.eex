@@ -1,39 +1,37 @@
 <br>
 <h1>Active alerts in <%= @location %></h1>
 
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Headline</th>
-      <th>Area</th>
-      <th>Certainty</th>
-      <th>Severity</th>
-
-      <th></th>
-    </tr>
-  </thead>
-
- <tbody>
-  <%= for {key, alert} <- @alerts do %>
-   <tr>
-    <td><%= alert["headline"] %></td>
-    <td><%= alert["areaDesc"] %></td>
-    <td><%= alert["certainty"] %></td>
-    <%= case alert["severity"] do %>
-    <%= "Severe" -> %>
-    <td style="color: red;" ><%= alert["severity"] %></td>
-    <%= "Moderate" ->%>
-    <td style="color: orangeRed;" ><%= alert["severity"] %></td>
-    <%= "Minor" ->%>
-    <td style="color: orange;" ><%= alert["severity"] %></td>
-    <%= end %>
-
-    <td class="text-right">
-        <span><%= link "Join", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
-    </td>
-   </tr>
- <% end %>
-
-</tbody>
-</table>
+<%= for {key, alert} <- @alerts do %>
+<div class="card border-dark mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= alert["event"] %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"> <%= alert["areaDesc"] %></h6>
+    <p class="card-text limit-text"><%= alert["description"] %></p>
+    <div class="card-block">
+      <div class="row">
+        <div class="col-md-3">
+          <strong> Severity: &nbsp;</strong>
+          <%= case alert["severity"] do %>
+          <% "Severe" -> %>
+          <p style="color: red;" ><%= alert["severity"] %></p>
+          <% "Moderate" ->%>
+          <p style="color: orange;" ><%= alert["severity"] %></p>
+          <% "Minor" ->%>
+          <p style="color: green;" ><%= alert["severity"] %></p>
+          <% end %>
+        </div>
+        <div class="col-md-3">
+          <strong> Certainty: &nbsp;</strong> <p><%= alert["certainty"] %></p>
+        </div>
+        <div class="col-md-3">
+          <strong> Category: &nbsp;</strong> <p><%= alert["category"] %></p>
+        </div>
+        <div class="col-md-3">
+          <strong> Response: &nbsp;</strong> <p><%= alert["response"] %></p>
+        </div>
+      </div>
+    </div> <br>
+    <span><%= link "Talk about this", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
+  </div>
+</div>
+<% end %>

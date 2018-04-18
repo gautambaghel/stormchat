@@ -1,12 +1,45 @@
 <div class="row">
   <div class="col">
-    <h3><%= @headline %></h3>
+
+    <div class="card border-dark mb-3">
+      <div class="card-body">
+        <h5 class="card-title"><%= @event %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"> <%= @areaDesc %></h6>
+        <p class="card-text limit-text"><%= @instruction %></p>
+        <div class="card-block">
+          <div class="row">
+            <div class="col-md-3">
+              <strong> Severity: &nbsp;</strong>
+              <%= case @severity do %>
+              <% "Severe" -> %>
+              <p style="color: red;" ><%= @severity %></p>
+              <% "Moderate" ->%>
+              <p style="color: orange;" ><%= @severity %></p>
+              <% "Minor" ->%>
+              <p style="color: green;" ><%= @severity %></p>
+              <% end %>
+            </div>
+            <div class="col-md-3">
+              <strong> Certainty: &nbsp;</strong> <p><%= @certainty %></p>
+            </div>
+            <div class="col-md-3">
+              <strong> Category: &nbsp;</strong> <p><%= @category %></p>
+            </div>
+            <div class="col-md-3">
+              <strong> Response: &nbsp;</strong> <p><%= @response %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
     <script>
-      window.current_topic = "<%= @alert_id %>";
-      window.current_id = "<%= @user_id %>";
+    window.current_topic = "<%= @alert_id %>";
+    window.current_id = "<%= @user_id %>";
     </script>
     <div id="react-chat">
-      <p>React app not loaded...</p>
+      <p>React app loading...</p>
     </div>
   </div>
 </div>
