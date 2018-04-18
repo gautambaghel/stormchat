@@ -11,6 +11,11 @@ defmodule Stormchat.Accounts do
     Repo.all(User)
   end
 
+  def list_by_location_sub(location) do
+    Repo.all(from u in User,
+          where: u.location == ^location and u.subscribed == :true)
+  end
+
   def get_by_id!(id) do
     Repo.get_by(User, id: id)
   end

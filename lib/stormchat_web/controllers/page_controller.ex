@@ -22,15 +22,8 @@ defmodule StormchatWeb.PageController do
           user_id = conn |> get_session(:current_user)
           user = Accounts.get_by_id!(user_id)
           location = Locations.get_by_abbr!(user.location).name
-
-          {:ok, pid} = CallAPI.start_link([])
-          data = CallAPI.get_weather(pid, user.location)
-
-          dataMap = Enum.reduce data, %{}, fn x, acc ->
-            Map.put(acc, x["properties"]["id"], x["properties"])
-          end
-
-          render conn, "index.html", user: user, location: location, alerts: dataMap
+          data = CallAPI.get_data_from_external_server(user.location)
+          render conn, "index.html", user: user, location: location, alerts: data
         end
       end
 

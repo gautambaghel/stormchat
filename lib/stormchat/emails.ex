@@ -3,15 +3,13 @@ defmodule Stormchat.Mailer do
           key: Application.get_env(:stormchat, :mailgun_key)
   use Mailgun.Client, @config
 
-
   @from "postmaster@mg.stormchat.sushiparty.blog"
 
-
-  def send_alert_email(user) do
+  def send_alert_email(user, html) do
     send_email to: user.email,
                from: @from,
-               subject: "hello!",
-               html: "<strong>Welcome!</strong>"
+               subject: "New weather alerts in your area!",
+               html: html
   end
 
 end

@@ -21,6 +21,13 @@ defmodule Stormchat.Locations do
     Repo.all(Location)
   end
 
+  def list_locations_abbr do
+    data = for l <- Repo.all(Location), do: l.abb
+    Enum.reduce data, %{}, fn x, acc ->
+         Map.put(acc, x, x)
+       end
+  end
+
   @doc """
   Gets a single location.
 
