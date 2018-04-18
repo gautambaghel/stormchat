@@ -14,6 +14,7 @@ defmodule StormchatWeb.PostView do
     %{id: post.id,
       body: post.body,
       username: post.user.name,
+      time: post.inserted_at,
       alert: post.alert}
   end
 

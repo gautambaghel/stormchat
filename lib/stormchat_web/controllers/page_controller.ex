@@ -23,10 +23,8 @@ defmodule StormchatWeb.PageController do
          user = Accounts.get_by_id!(user_id)
          location = Locations.get_by_abbr!(user.location).name
 
-         {:ok, pid} = CallAPI.start_link
-         {_, data} = CallAPI.get_weather(pid, user.location)
-         data = Poison.decode!(data)
-         data = data["features"]
+         {:ok, pid} = CallAPI.start_link([])
+         data = CallAPI.get_weather(pid, user.location)
 
          dataMap = Enum.reduce data, %{}, fn x, acc ->
             Map.put(acc, x["properties"]["id"], x["properties"])

@@ -31,7 +31,7 @@ defmodule StormchatWeb.Router do
   # Other scopes may use custom stacks.
    scope "/api/v1", StormchatWeb do
      pipe_through :api
-     
+
      resources "/posts/:topic", PostController, except: [:new, :edit]
    end
 

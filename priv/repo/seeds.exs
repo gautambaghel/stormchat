@@ -28,7 +28,7 @@ defmodule Seeds do
     Repo.insert!(%Location{ name: "New York", abb: "NY"})
 
     Repo.delete_all(User)
-    a = Repo.insert!(%User{ email: "dave@gmail.com", name: "dave", crypted_password: p, location: "MA" })
+    a = Repo.insert!(%User{ email: "dave@gmail.com", name: "dave", crypted_password: p, location: "MA", subscribed: true})
     b = Repo.insert!(%User{ email: "bob@gmail.com", name: "bob", crypted_password: p, location: "MA" })
 
     Repo.delete_all(Post)

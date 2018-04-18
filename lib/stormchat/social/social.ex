@@ -19,9 +19,9 @@ defmodule Stormchat.Social do
   """
 
   def list_posts_by_topic(topic) do
-    from(p in Post, where: p.alert == ^topic)
+    from(p in Post, where: [alert: ^topic], order_by: [desc: p.id])
      |> Repo.all()
-     |> Repo.preload(:user)
+      |> Repo.preload(:user)
   end
 
   @doc """
