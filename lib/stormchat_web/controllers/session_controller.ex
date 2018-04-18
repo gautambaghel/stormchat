@@ -10,7 +10,7 @@ defmodule StormchatWeb.SessionController do
     {:ok, user} ->
       conn
       |> put_session(:current_user, user.id)
-      |> put_flash(:info, "Logged in")
+      |> put_flash(:info, "#{"Welcome back, "}#{user.name}#{"!"}")
       |> redirect(to: "/")
     :error ->
       conn

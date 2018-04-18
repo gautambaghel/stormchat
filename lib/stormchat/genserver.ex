@@ -4,7 +4,7 @@ defmodule Stormchat.CallAPI do
   # Client
   def start_link do
     init_state = Stormchat.Locations.list_locations_abbr
-    state = for {k, v} <- init_state, into: %{}, do: {k, get_data_from_external_server(k)}
+    state = for {k, _} <- init_state, into: %{}, do: {k, get_data_from_external_server(k)}
     GenServer.start_link(__MODULE__, state, name: :weather_alert)
   end
 
@@ -32,6 +32,10 @@ defmodule Stormchat.CallAPI do
   #   {:reply, location_data, state}
   # end
 
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, state}
+  end
+
   def handle_call(:get_state, _from, state) do
     {:reply, state, state}
   end
@@ -49,17 +53,14 @@ defmodule Stormchat.CallAPI do
     updated_state # send the updates state to become the new one
   end
 
-  def check_new_key(location, new, old) do
+  defp check_new_key(location, new, old) do
     new_keys =  Map.keys(new) -- Map.keys(old)
     subscribed_users_of_location = Stormchat.Accounts.list_by_location_sub(location)
     data_arr = for x <- new_keys, do: get_data_for_id(x)
     data = Enum.join(data_arr, " <br><br><br> ")
+    data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.sushiparty.blog\">Visit Stormchat @ Sushiparty</a> "}"
 
     for user <- subscribed_users_of_location, do: Stormchat.Mailer.send_alert_email(user,data)
-  end
-
-  def handle_call(:stop, _from, status) do
-    {:stop, :normal, status}
   end
 
   def terminate(reason, _status) do
