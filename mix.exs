@@ -44,8 +44,13 @@ defmodule Stormchat.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13"},
+<<<<<<< HEAD
       {:poison, "~> 3.1", override: true},
       {:mailgun, "~> 0.1.2"}
+=======
+      {:poison, "~> 3.1"},
+      {:mailer, github: "antp/mailer"}
+>>>>>>> ea8c0791c32c283fd82f4a2e5940e20e81894463
     ]
   end
 

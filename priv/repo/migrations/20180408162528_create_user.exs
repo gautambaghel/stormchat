@@ -7,6 +7,7 @@ defmodule Stormchat.Repo.Migrations.CreateUser do
       add :crypted_password, :string,  null: false
       add :name, :string,  null: false
       add :location, :string,  null: false
+      add :subscribed, :boolean,  default: false
 
       timestamps()
     end

@@ -3,11 +3,12 @@ defmodule Stormchat.Accounts.User do
   import Ecto.Changeset
 
   schema "users" do
-    field :email, :string 
+    field :email, :string
     field :crypted_password, :string
     field :password, :string, virtual: true
     field :name, :string
     field :location, :string
+    field :subscribed, :boolean, default: false
 
     timestamps()
   end
@@ -17,10 +18,10 @@ defmodule Stormchat.Accounts.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :crypted_password, :name, :location])
+    |> cast(params, [:email, :crypted_password, :name, :location, :subscribed])
     |> validate_required([:email, :name, :location])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
-    |> validate_length(:password, min: 5)
+    |> validate_length(:crypted_password, min: 5)
   end
 end

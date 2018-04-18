@@ -28,8 +28,8 @@ defmodule Stormchat.Accounts do
 
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs
-        |> put_change(:crypted_password, hashed_password(attrs["password"])))
+    |> User.changeset(attrs)
+    |> put_change(:crypted_password, hashed_password(attrs["password"]))
     |> Repo.update()
   end
 

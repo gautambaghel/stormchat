@@ -32,7 +32,7 @@
        <div class="collapse navbar-collapse" id="navbarNav">
          <div class="navbar-nav navbar-right">
            <%= if logged_in?(@conn) do %>
-                <a class="nav-item nav-link"><%= current_user(@conn).name %></a>
+                <%= link current_user(@conn).name, to: user_path(@conn, :index), class: "nav-item nav-link" %>
                 <%= link raw(~s'Logout'), to: session_path(@conn, :delete), method: :delete, class: "nav-item nav-link" %>
            <% else %>
               <%= link raw(~s'Login'), to: "/login", class: "nav-item nav-link" %>
