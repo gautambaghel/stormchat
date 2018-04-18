@@ -25,3 +25,7 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# mailgun config
+config :stormchat, mailgun_domain: "https://api.mailgun.net/v3/mg.stormchat.sushiparty.blog",
+                   mailgun_key: "key-8af49ae9fbef0d74143a86e4f34d4fe4"
