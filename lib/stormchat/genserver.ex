@@ -55,12 +55,14 @@ defmodule Stormchat.CallAPI do
 
   defp check_new_key(location, new, old) do
     new_keys =  Map.keys(new) -- Map.keys(old)
-    subscribed_users_of_location = Stormchat.Accounts.list_by_location_sub(location)
-    data_arr = for x <- new_keys, do: get_data_for_id(x)
-    data = Enum.join(data_arr, " <br><br><br> ")
-    data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.sushiparty.blog\">Visit Stormchat @ Sushiparty</a> "}"
+    if new_keys != [] do
+      subscribed_users_of_location = Stormchat.Accounts.list_by_location_sub(location)
+      data_arr = for x <- new_keys, do: get_data_for_id(x)
+      data = Enum.join(data_arr, " <br><br><br> ")
+      data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.sushiparty.blog\">Visit Stormchat @ Sushiparty</a> "}"
 
-    for user <- subscribed_users_of_location, do: Stormchat.Mailer.send_alert_email(user,data)
+      for user <- subscribed_users_of_location, do: Stormchat.Mailer.send_alert_email(user,data)
+    end
   end
 
   def terminate(reason, _status) do
@@ -93,7 +95,7 @@ defmodule Stormchat.CallAPI do
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :work, 1 * 60 * 60 * 1000) # In 1 hour
+    Process.send_after(self(), :work, 2 * 60 * 60 * 1000) # In 2 hour
   end
 
 end
