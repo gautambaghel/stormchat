@@ -1,6 +1,12 @@
 <br>
 <h1>Active alerts in <%= @location %></h1>
 
+
+<%= if @alerts == %{} do %>
+  <br><br>
+  <h1>** NO ACTIVE ALERTS**</h1>
+<% end %>
+
 <%= for {_, alert} <- @alerts do %>
 <div class="card border-dark mb-3">
   <div class="card-body">

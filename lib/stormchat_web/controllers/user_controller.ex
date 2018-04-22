@@ -33,6 +33,8 @@ defmodule StormchatWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+
+    locations = Locations.list_locations
     case Accounts.create_user(user_params) do
       {:ok, user} ->
          conn
@@ -41,7 +43,7 @@ defmodule StormchatWeb.UserController do
           |> redirect(to: "/")
       {:error, changeset} ->conn
           |> put_flash(:info, "Unable to create account")
-          |> render("new.html", changeset: changeset)
+          |> render("new.html", changeset: changeset, locations: locations)
     end
   end
 
