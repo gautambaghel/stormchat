@@ -4,7 +4,6 @@ defmodule Stormchat.Accounts do
   import Ecto.Changeset, only: [put_change: 3]
 
   alias Stormchat.Repo
-
   alias Stormchat.Accounts.User
 
   def list_users do
@@ -38,11 +37,9 @@ defmodule Stormchat.Accounts do
     |> Repo.update()
   end
 
-
   def delete_user(%User{} = user) do
     Repo.delete(user)
   end
-
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
@@ -50,6 +47,21 @@ defmodule Stormchat.Accounts do
 
   defp hashed_password(password) do
      Comeonin.Argon2.hashpwsalt(password)
+  end
+
+  def get_and_auth_user(email, pass) do
+    user = get_by_email!(String.downcase(email))
+    case authenticate(user, pass) do
+      true -> {:ok, user}
+      _    -> {:error, "Incorrect login details, try again"}
+    end
+  end
+
+  defp authenticate(user, password) do
+    case user do
+      nil -> false
+      _   -> Comeonin.Argon2.checkpw(password, user.crypted_password)
+    end
   end
 
 end

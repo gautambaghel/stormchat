@@ -17,4 +17,5 @@ defmodule StormchatWeb.FallbackController do
     |> put_status(:not_found)
     |> render(StormchatWeb.ErrorView, :"404")
   end
+
 end

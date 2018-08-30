@@ -9,6 +9,8 @@ defmodule StormchatWeb.PageController do
 
   alias Stormchat.CallAPI
 
+  action_fallback StormchatWeb.FallbackController
+
   def index(conn, _params) do
     logged_in = Session.logged_in?(conn)
 
@@ -29,21 +31,31 @@ defmodule StormchatWeb.PageController do
 
       def chat(conn, %{"id" => id}) do
 
-        data = CallAPI.get_data_for_id(id)
+        logged_in = Session.logged_in?(conn)
 
-        severity = data["severity"]
-        category = data["category"]
-        certainty = data["certainty"]
-        response = data["response"]
-        instruction = data["instruction"]
-        event = data["event"]
-        areaDesc = data["areaDesc"]
+        case logged_in do
+          false ->
+            changeset = User.changeset(%User{})
+            locations = Locations.list_locations
+            render conn, "index_not_logged.html", changeset: changeset, locations: locations
 
-        user_id = conn |> get_session(:current_user)
-        render conn, "chat.html", alert_id: id, severity: severity,
-        user_id: user_id, category: category, certainty: certainty,
-        response: response, instruction: instruction, event: event,
-        areaDesc: areaDesc
-      end
+          true ->
+            data = CallAPI.get_data_for_id(id)
+
+            severity = data["severity"]
+            category = data["category"]
+            certainty = data["certainty"]
+            response = data["response"]
+            instruction = data["instruction"]
+            event = data["event"]
+            areaDesc = data["areaDesc"]
+
+            user_id = conn |> get_session(:current_user)
+            render conn, "chat.html", alert_id: id, severity: severity,
+            user_id: user_id, category: category, certainty: certainty,
+            response: response, instruction: instruction, event: event,
+            areaDesc: areaDesc
+         end
+       end
 
     end
