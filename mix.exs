@@ -43,6 +43,7 @@ defmodule Stormchat.Mixfile do
       {:argon2_elixir, "~> 1.2"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+      {:secure_random, "~> 0.2"},
       {:httpoison, "~> 0.13"},
       {:poison, "~> 3.1", override: true},
       {:mailgun, "~> 0.1.2"}
@@ -59,7 +60,7 @@ defmodule Stormchat.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

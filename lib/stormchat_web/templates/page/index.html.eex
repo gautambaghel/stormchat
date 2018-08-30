@@ -37,8 +37,7 @@
         </div>
       </div>
     </div> <br>
-    <% key %>
-    <span><%= link "Talk about this", to: page_path(@conn, :chat , %{"id": key}), class: "btn btn-primary btn-xs" %></span>
+    <span><%= link "Talk about this", to: page_path(@conn, :chat , %{id: key}), class: "btn btn-primary btn-xs" %></span>
   </div>
 </div>
 <% end %>

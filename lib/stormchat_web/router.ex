@@ -21,6 +21,7 @@ defmodule StormchatWeb.Router do
 
     resources "/locations", LocationController, only: [:index]
     resources "/registration", UserController
+    resources "/sessions", SessionController, only: [:create]
 
     get    "/login",  SessionController, :new
     post   "/login",  SessionController, :create
@@ -33,6 +34,8 @@ defmodule StormchatWeb.Router do
      pipe_through :api
 
      resources "/posts/:topic", PostController, except: [:new, :edit]
+     post "/login", SessionController, :create
+     delete "/login", SessionController, :delete
    end
 
 end
