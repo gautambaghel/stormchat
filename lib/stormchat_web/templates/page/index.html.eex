@@ -7,7 +7,7 @@
   <h1>** NO ACTIVE ALERTS**</h1>
 <% end %>
 
-<%= for {_, alert} <- @alerts do %>
+<%= for {key, alert} <- @alerts do %>
 <div class="card border-dark mb-3">
   <div class="card-body">
     <h5 class="card-title"><%= alert["event"] %></h5>
@@ -37,7 +37,8 @@
         </div>
       </div>
     </div> <br>
-    <span><%= link "Talk about this", to: page_path(@conn, :chat , alert), class: "btn btn-primary btn-xs" %></span>
+    <% key %>
+    <span><%= link "Talk about this", to: page_path(@conn, :chat , %{"id": key}), class: "btn btn-primary btn-xs" %></span>
   </div>
 </div>
 <% end %>

@@ -27,10 +27,17 @@ defmodule StormchatWeb.PageController do
         end
       end
 
-      def chat(conn, %{"id" => id, "severity" => severity,
-      "category" => category, "certainty" => certainty,
-      "response" => response, "instruction" => instruction,
-      "event" => event, "areaDesc" => areaDesc}) do
+      def chat(conn, %{"id" => id}) do
+
+        data = CallAPI.get_data_for_id(id)
+
+        severity = data["severity"]
+        category = data["category"]
+        certainty = data["certainty"]
+        response = data["response"]
+        instruction = data["instruction"]
+        event = data["event"]
+        areaDesc = data["areaDesc"]
 
         user_id = conn |> get_session(:current_user)
         render conn, "chat.html", alert_id: id, severity: severity,

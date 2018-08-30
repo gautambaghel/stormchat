@@ -57,7 +57,7 @@ defmodule Stormchat.CallAPI do
     new_keys =  Map.keys(new) -- Map.keys(old)
     if new_keys != [] do
       subscribed_users_of_location = Stormchat.Accounts.list_by_location_sub(location)
-      data_arr = for x <- new_keys, do: get_data_for_id(x)
+      data_arr = for x <- new_keys, do: get_desc_for_id(x)
       data = Enum.join(data_arr, " <br><br><br> ")
       data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.sushiparty.blog\">Visit Stormchat @ Sushiparty</a> "}"
 
@@ -83,7 +83,16 @@ defmodule Stormchat.CallAPI do
     dataMap
   end
 
-  defp get_data_for_id(id) do
+  def get_data_for_id(id) do
+    url = "https://api.weather.gov/alerts/"
+    headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
+    final_url = "#{url}#{id}"
+    {:ok, content} = HTTPoison.get(final_url, headers)
+    data = Poison.decode!(content.body)
+    data["properties"]
+  end
+
+  defp get_desc_for_id(id) do
     url = "https://api.weather.gov/alerts/"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{id}"
