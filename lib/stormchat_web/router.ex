@@ -33,7 +33,8 @@ defmodule StormchatWeb.Router do
      pipe_through :api
 
      resources "/posts/:topic", PostController, except: [:new, :edit]
-     
+     get "/alerts/:location", PageController, :alert
+
      post "/new_user", TokenController, :new
      post "/token", TokenController, :create
      delete "/token", TokenController, :delete
