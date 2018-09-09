@@ -48,7 +48,10 @@
     <% end %>
   </div>
 
-  <div class="col-md-2">
+
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-1">
     <div style="border-left: 2px solid; height: 100%;" class="text-secondary">
     </div>
   </div>
