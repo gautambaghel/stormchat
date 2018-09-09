@@ -45,6 +45,7 @@ defmodule Stormchat.Mixfile do
       {:cowboy, "~> 1.0"},
       {:secure_random, "~> 0.2"},
       {:httpoison, "~> 0.13"},
+      {:distillery, "~>1.5", runtime: false},
       {:poison, "~> 3.1", override: true},
       {:mailgun, "~> 0.1.2"}
     ]
