@@ -52,7 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 config :stormchat, Stormchat.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "stormchat",
-  password: "nar6ahzohGhe",
+  password: "eik0ooY7ugho",
   database: "stormchat_dev",
   hostname: "localhost",
   pool_size: 10

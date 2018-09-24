@@ -19,13 +19,7 @@ defmodule StormchatWeb.TokenController do
              |> render("token.json", user: user, token: token)
         {:error, changeset} ->
            err =
-           try do
-             [email: {msg, []}] = changeset.errors
-             err = "Email " <> msg <> " !"
-           catch
-             _ ->
-             err = "Error in creating user please verify the info entered"
-           end
+             StormchatWeb.ChangesetView.translate_errors(changeset)
            conn
              |> put_status(:unprocessable_entity)
              |> render("error.json", error: err)
