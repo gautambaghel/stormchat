@@ -9,6 +9,15 @@ use Mix.Config
 config :stormchat,
   ecto_repos: [Stormchat.Repo]
 
+# Configure Google OAuth
+config :ueberauth, Ueberauth,
+  providers: [
+    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+  ]
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 # Configures the endpoint
 config :stormchat, StormchatWeb.Endpoint,
   url: [host: "localhost"],

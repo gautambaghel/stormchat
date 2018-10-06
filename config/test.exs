@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :stormchat, Stormchat.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "stormchat",
+  password: "eik0ooY7ugho",
   database: "stormchat_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
