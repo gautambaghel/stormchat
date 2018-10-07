@@ -18,8 +18,7 @@ defmodule StormchatWeb.TokenController do
              |> put_status(:created)
              |> render("token.json", user: user, token: token)
         {:error, changeset} ->
-           err =
-             StormchatWeb.ChangesetView.translate_errors(changeset)
+           err = StormchatWeb.ChangesetView.translate_errors(changeset)
            conn
              |> put_status(:unprocessable_entity)
              |> render("error.json", error: err)
@@ -45,6 +44,5 @@ defmodule StormchatWeb.TokenController do
       conn
         |> render("delete_token.json")
   end
-
 
 end

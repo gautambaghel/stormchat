@@ -13,12 +13,6 @@ defmodule StormchatWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/auth", StormchatWeb do
-    pipe_through :browser
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :new
-  end
-
   scope "/", StormchatWeb do
     pipe_through :browser # Use the default browser stack
 
@@ -34,8 +28,13 @@ defmodule StormchatWeb.Router do
 
   end
 
-  # Other scopes may use custom stacks.
-   scope "/api/v1", StormchatWeb do
+  scope "/auth", StormchatWeb do
+      pipe_through :api
+      get "/:provider", AuthController, :request
+      get "/:provider/callback", AuthController, :callback
+  end
+
+  scope "/api/v1", StormchatWeb do
      pipe_through :api
 
      resources "/posts/:topic", PostController, except: [:new, :edit]
@@ -44,6 +43,6 @@ defmodule StormchatWeb.Router do
      post "/new_user", TokenController, :new
      post "/token", TokenController, :create
      delete "/token", TokenController, :delete
-   end
+  end
 
 end

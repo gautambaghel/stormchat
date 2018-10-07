@@ -12,11 +12,17 @@ config :stormchat,
 # Configure Google OAuth
 config :ueberauth, Ueberauth,
   providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "emails profile plus.me"]}
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile plus.me"]},
+    facebook: {Ueberauth.Strategy.Facebook, [default_scope: "email,public_profile,user_friends"]}
   ]
+
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: System.get_env("GOOGLE_CLIENT_ID"),
   client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
+  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
+  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
 
 # Configures the endpoint
 config :stormchat, StormchatWeb.Endpoint,

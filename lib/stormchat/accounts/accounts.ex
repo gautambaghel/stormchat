@@ -5,6 +5,7 @@ defmodule Stormchat.Accounts do
 
   alias Stormchat.Repo
   alias Stormchat.Accounts.User
+  alias Stormchat.Accounts.AuthUser
 
   def list_users do
     Repo.all(User)
@@ -21,6 +22,14 @@ defmodule Stormchat.Accounts do
 
   def get_by_email!(email) do
     Repo.get_by(User, email: email)
+  end
+
+  def get_authuser_by_email!(email) do
+    Repo.get_by(AuthUser, email: email)
+  end
+
+  def create_authuser(changeset) do
+    Repo.insert(changeset)
   end
 
   def create_user(attrs \\ %{}) do

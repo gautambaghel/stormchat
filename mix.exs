@@ -48,8 +48,9 @@ defmodule Stormchat.Mixfile do
       {:distillery, "~>1.5", runtime: false},
       {:poison, "~> 3.1", override: true},
       {:mailgun, "~> 0.1.2"},
-      {:ueberauth, "~> 0.4"}, # add this line
-      {:ueberauth_google, "~> 0.5"} # add this line
+      {:ueberauth, "~> 0.4"},
+      {:ueberauth_google, "~> 0.5"},
+      {:ueberauth_facebook, "~> 0.7"}
     ]
   end
 
