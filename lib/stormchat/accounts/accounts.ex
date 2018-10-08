@@ -29,9 +29,12 @@ defmodule Stormchat.Accounts do
   end
 
   def get_auth_user!(auth, provider, name) do
-    user = Repo.get_by(AuthUser, auth: auth, provider: provider, name: name)
+    user = Repo.get_by(AuthUser, auth: auth)
     case user do
-      nil -> {:error, "Incorrect login details, try again"}
+      nil -> case Repo.insert %AuthUser{auth: auth, provider: provider, name: name} do
+                {:ok, struct}       -> {:ok, struct}
+                {:error, changeset} -> {:error, changeset}
+             end
       _   -> {:ok, user}
     end
   end
