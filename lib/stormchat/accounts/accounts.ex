@@ -28,6 +28,30 @@ defmodule Stormchat.Accounts do
     Repo.get_by(AuthUser, email: email)
   end
 
+  def get_auth_user!(auth, provider, name) do
+    user = Repo.get_by(AuthUser, auth: auth, provider: provider, name: name)
+    case user do
+      nil -> {:error, "Incorrect login details, try again"}
+      _   -> {:ok, user}
+    end
+  end
+
+  def add_authuser_data!(auth, email, location, subscribed) do
+    user = Repo.get_by(AuthUser, auth: auth)
+    user = Ecto.Changeset.change user, email: email, location: location, subscribed: get_bool_from_str(subscribed)
+    case Repo.update user do
+      {:ok, struct}       -> {:ok, struct}
+      {:error, changeset} -> {:error, changeset}
+    end
+  end
+
+  defp get_bool_from_str(subscribed) do
+    case subscribed do
+      "true" -> :true
+      _ -> :false
+    end
+  end
+
   def create_authuser(changeset) do
     Repo.insert(changeset)
   end

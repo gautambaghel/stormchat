@@ -1,6 +1,4 @@
-<br>
-<h1>Active alerts in <%= @location %></h1>
-
+<br><h1>Active alerts in <%= @location %></h1><hr>
 
 <%= if @alerts == %{} do %>
   <br><br>
@@ -8,36 +6,36 @@
 <% end %>
 
 <%= for {key, alert} <- @alerts do %>
-<div class="card border-dark mb-3">
-  <div class="card-body">
-    <h5 class="card-title"><%= alert["event"] %></h5>
-    <h6 class="card-subtitle mb-2 text-muted"> <%= alert["areaDesc"] %></h6>
-    <p class="card-text limit-text"><%= alert["description"] %></p>
-    <div class="card-block">
-      <div class="row">
-        <div class="col-md-3">
-          <strong> Severity: &nbsp;</strong>
-          <%= case alert["severity"] do %>
-          <% "Severe" -> %>
-          <p style="color: red;" ><%= alert["severity"] %></p>
-          <% "Moderate" ->%>
-          <p style="color: orange;" ><%= alert["severity"] %></p>
-          <% "Minor" ->%>
-          <p style="color: green;" ><%= alert["severity"] %></p>
-          <% end %>
+  <div class="card border-dark mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><%= alert["event"] %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"> <%= alert["areaDesc"] %></h6>
+      <p class="card-text limit-text"><%= alert["description"] %></p>
+      <div class="card-block">
+        <div class="row">
+          <div class="col-md-3">
+            <strong> Severity: &nbsp;</strong>
+            <%= case alert["severity"] do %>
+            <% "Severe" -> %>
+            <p style="color: red;" ><%= alert["severity"] %></p>
+            <% "Moderate" ->%>
+            <p style="color: orange;" ><%= alert["severity"] %></p>
+            <% "Minor" ->%>
+            <p style="color: green;" ><%= alert["severity"] %></p>
+            <% end %>
+          </div>
+          <div class="col-md-3">
+            <strong> Certainty: &nbsp;</strong> <p><%= alert["certainty"] %></p>
+          </div>
+          <div class="col-md-3">
+            <strong> Category: &nbsp;</strong> <p><%= alert["category"] %></p>
+          </div>
+          <div class="col-md-3">
+            <strong> Response: &nbsp;</strong> <p><%= alert["response"] %></p>
+          </div>
         </div>
-        <div class="col-md-3">
-          <strong> Certainty: &nbsp;</strong> <p><%= alert["certainty"] %></p>
-        </div>
-        <div class="col-md-3">
-          <strong> Category: &nbsp;</strong> <p><%= alert["category"] %></p>
-        </div>
-        <div class="col-md-3">
-          <strong> Response: &nbsp;</strong> <p><%= alert["response"] %></p>
-        </div>
-      </div>
-    </div> <br>
-    <span><%= link "Talk about this", to: page_path(@conn, :chat , %{id: key}), class: "btn btn-primary btn-xs" %></span>
+      </div> <br>
+      <span><%= link "Talk about this", to: page_path(@conn, :chat , %{id: key}), class: "btn btn-primary btn-lg" %></span>
+    </div>
   </div>
-</div>
 <% end %>

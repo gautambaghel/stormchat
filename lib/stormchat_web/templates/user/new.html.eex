@@ -1,3 +1,10 @@
-<h2>Register for an account</h2>
-
-<%= render "form.html", Map.put(assigns, :action, user_path(@conn, :create)) %>
+<div class="row">
+ <div class="col-md-3">
+ </div>
+ <div class="col-md-6">
+   <br><h2>Sign Up for an account</h2><hr>
+   <%= render "form.html", Map.put(assigns, :action, user_path(@conn, :create)) %>
+ </div>
+ <div class="col-md-3">
+ </div>
+</div>

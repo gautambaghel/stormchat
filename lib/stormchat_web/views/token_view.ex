@@ -6,6 +6,8 @@ defmodule StormchatWeb.TokenView do
       user_id: user.id,
       name: user.name,
       email: user.email,
+      location: user.location,
+      subscribed: user.subscribed,
       token: token,
     }
   end

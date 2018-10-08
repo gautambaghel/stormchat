@@ -12,7 +12,6 @@ defmodule StormchatWeb.AuthController do
                          email: auth.info.email,
                          provider: auth.provider}
     changeset = AuthUser.changeset(%AuthUser{}, auth_user_params)
-  # create(conn, changeset)
     insert_or_update_user(conn, changeset)
     conn
   end

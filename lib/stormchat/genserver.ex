@@ -74,7 +74,7 @@ defmodule Stormchat.CallAPI do
     url = "https://api.weather.gov/alerts/active"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{"/area/"}#{location}"
-    {:ok, content} = HTTPoison.get(final_url, headers,[timeout: 50_000, recv_timeout: 50_000])
+    {:ok, content} = HTTPoison.get(final_url, headers,[timeout: 600_000, recv_timeout: 600_000])
     data = Poison.decode!(content.body)
     data = data["features"]
     dataMap = Enum.reduce data, %{}, fn x, acc ->

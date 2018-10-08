@@ -29,7 +29,8 @@ defmodule StormchatWeb.Router do
   end
 
   scope "/auth", StormchatWeb do
-      pipe_through :api
+      pipe_through :browser
+
       get "/:provider", AuthController, :request
       get "/:provider/callback", AuthController, :callback
   end
