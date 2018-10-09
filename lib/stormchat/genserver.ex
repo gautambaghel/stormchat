@@ -59,7 +59,7 @@ defmodule Stormchat.CallAPI do
       subscribed_users_of_location = Stormchat.Accounts.list_by_location_sub(location)
       data_arr = for x <- new_keys, do: get_desc_for_id(x)
       data = Enum.join(data_arr, " <br><br><br> ")
-      data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.sushiparty.blog\">Visit Stormchat @ Sushiparty</a> "}"
+      data = "#{data}#{"<br><br>"}#{"  <a href=\"https://stormchat.gautambaghel.com\">Visit Stormchat @ Sushiparty</a> "}"
 
       for user <- subscribed_users_of_location, do: Stormchat.Mailer.send_alert_email(user,data)
     end
@@ -74,13 +74,19 @@ defmodule Stormchat.CallAPI do
     url = "https://api.weather.gov/alerts/active"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{"/area/"}#{location}"
-    {:ok, content} = HTTPoison.get(final_url, headers,[timeout: 100_000, recv_timeout: 100_000])
-    data = Poison.decode!(content.body)
-    data = data["features"]
-    dataMap = Enum.reduce data, %{}, fn x, acc ->
-      Map.put(acc, x["properties"]["id"], x["properties"])
+    with {:ok, content} <-  HTTPoison.get(final_url, headers,[timeout: 100_000, recv_timeout: 100_000]) do
+      data = Poison.decode!(content.body)
+      data = data["features"]
+      dataMap = Enum.reduce data, %{}, fn x, acc ->
+        Map.put(acc, x["properties"]["id"], x["properties"])
+      end
+      dataMap
+    else
+      err ->
+        IO.inspect(err)
+        Process.send_after(self(), :work, 1000)
+        []
     end
-    dataMap
   end
 
   def get_data_for_id(id) do

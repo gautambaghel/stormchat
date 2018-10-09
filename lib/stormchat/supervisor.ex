@@ -7,7 +7,7 @@ defmodule Stormchat.Supervisor do
 
   def init(_) do
     children = [
-       worker(Stormchat.CallAPI, [])
+       # worker(Stormchat.CallAPI, [])
     ]
 
     supervise(children, strategy: :one_for_one)
