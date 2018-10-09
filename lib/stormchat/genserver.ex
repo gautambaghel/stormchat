@@ -74,7 +74,7 @@ defmodule Stormchat.CallAPI do
     url = "https://api.weather.gov/alerts/active"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{"/area/"}#{location}"
-    {:ok, content} = HTTPoison.get(final_url, headers,[timeout: 600_000, recv_timeout: 600_000])
+    {:ok, content} = HTTPoison.get(final_url, headers,[timeout: 100_000, recv_timeout: 100_000])
     data = Poison.decode!(content.body)
     data = data["features"]
     dataMap = Enum.reduce data, %{}, fn x, acc ->
@@ -87,20 +87,32 @@ defmodule Stormchat.CallAPI do
     url = "https://api.weather.gov/alerts/"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{id}"
-    {:ok, content} = HTTPoison.get(final_url, headers)
-    data = Poison.decode!(content.body)
-    data["properties"]
+    with {:ok, content} <- HTTPoison.get(final_url, headers) do
+      data = Poison.decode!(content.body)
+      data["properties"]
+    else
+      err ->
+        IO.inspect(err)
+        Process.send_after(self(), :work, 1000)
+        []
+    end
   end
 
   defp get_desc_for_id(id) do
     url = "https://api.weather.gov/alerts/"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
     final_url = "#{url}#{id}"
-    {:ok, content} = HTTPoison.get(final_url, headers)
-    data = Poison.decode!(content.body)
-    filler = " for "
-    data = "#{data["properties"]["headline"]}#{filler}#{data["properties"]["areaDesc"]}"
-    data
+    with {:ok, content} <- HTTPoison.get(final_url, headers) do
+      data = Poison.decode!(content.body)
+      filler = " for "
+      data = "#{data["properties"]["headline"]}#{filler}#{data["properties"]["areaDesc"]}"
+      data
+    else
+      err ->
+        IO.inspect(err)
+        Process.send_after(self(), :work, 1000)
+        []
+    end
   end
 
   defp schedule_work() do
