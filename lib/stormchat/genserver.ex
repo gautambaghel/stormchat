@@ -78,7 +78,14 @@ defmodule Stormchat.CallAPI do
       data = Poison.decode!(content.body)
       data = data["features"]
       dataMap = Enum.reduce data, %{}, fn x, acc ->
-        Map.put(acc, x["properties"]["id"], x["properties"])
+        Map.put(acc, x["properties"]["id"],
+        %{"event" => x["properties"]["event"],
+        "response" => x["properties"]["response"],
+        "severity" => x["properties"]["severity"],
+        "description" => x["properties"]["description"],
+        "category" => x["properties"]["category"],
+        "areaDesc" => x["properties"]["areaDesc"],
+        "headline" => x["properties"]["headline"]})
       end
       dataMap
     else
