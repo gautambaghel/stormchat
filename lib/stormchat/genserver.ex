@@ -106,9 +106,8 @@ defmodule Stormchat.CallAPI do
       data = data["features"]
       dataMap = Enum.reduce data, %{}, fn x, acc ->
         Map.put(acc, x["properties"]["id"],
-        %{"event" => x["properties"]["event"],
-        "id" => x["properties"]["id"],
-        "description" => x["properties"]["description"],
+        %{"id" => x["properties"]["id"],
+        "event" => x["properties"]["event"],
         "areaDesc" => x["properties"]["areaDesc"],
         "headline" => x["properties"]["headline"]})
       end
