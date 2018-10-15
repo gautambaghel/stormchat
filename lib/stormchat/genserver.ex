@@ -80,6 +80,7 @@ defmodule Stormchat.CallAPI do
       dataMap = Enum.reduce data, %{}, fn x, acc ->
         Map.put(acc, x["properties"]["id"],
         %{"event" => x["properties"]["event"],
+        "id" => x["properties"]["id"],
         "response" => x["properties"]["response"],
         "severity" => x["properties"]["severity"],
         "description" => x["properties"]["description"],
