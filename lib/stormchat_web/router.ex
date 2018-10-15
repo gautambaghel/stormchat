@@ -40,6 +40,7 @@ defmodule StormchatWeb.Router do
 
      resources "/posts/:topic", PostController, except: [:new, :edit]
      get "/alerts/:location", PageController, :alert
+     get "/alerts/mobile/:location", PageController, :mobile
 
      post "/new_user", TokenController, :new
      post "/token", TokenController, :create

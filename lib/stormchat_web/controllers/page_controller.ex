@@ -64,4 +64,11 @@ defmodule StormchatWeb.PageController do
       |> render("index.json", alerts: data)
   end
 
+  def mobile(conn, %{"location" => location}) do
+
+    data = CallAPI.get_lim_data_from_external_server(location)
+    conn
+      |> render("index.json", alerts: data)
+  end
+
 end

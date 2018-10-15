@@ -97,6 +97,30 @@ defmodule Stormchat.CallAPI do
     end
   end
 
+  def get_lim_data_from_external_server(location) do
+    url = "https://api.weather.gov/alerts/active"
+    headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
+    final_url = "#{url}#{"/area/"}#{location}"
+    with {:ok, content} <-  HTTPoison.get(final_url, headers,[timeout: 100_000, recv_timeout: 100_000]) do
+      data = Poison.decode!(content.body)
+      data = data["features"]
+      dataMap = Enum.reduce data, %{}, fn x, acc ->
+        Map.put(acc, x["properties"]["id"],
+        %{"event" => x["properties"]["event"],
+        "id" => x["properties"]["id"],
+        "description" => x["properties"]["description"],
+        "areaDesc" => x["properties"]["areaDesc"],
+        "headline" => x["properties"]["headline"]})
+      end
+      dataMap
+    else
+      err ->
+        IO.inspect(err)
+        Process.send_after(self(), :work, 1000)
+        []
+    end
+  end
+
   def get_data_for_id(id) do
     url = "https://api.weather.gov/alerts/"
     headers = ["Accept": "application/vnd.noaa.dwml+xml;version=1"]
