@@ -85,6 +85,7 @@ defmodule Stormchat.CallAPI do
         "severity" => x["properties"]["severity"],
         "description" => x["properties"]["description"],
         "category" => x["properties"]["category"],
+	"certainty" => x["properties"]["certainty"],
         "areaDesc" => x["properties"]["areaDesc"],
         "headline" => x["properties"]["headline"]})
       end

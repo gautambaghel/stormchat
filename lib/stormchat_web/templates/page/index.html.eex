@@ -22,6 +22,8 @@
             <p style="color: orange;" ><%= alert["severity"] %></p>
             <% "Minor" ->%>
             <p style="color: green;" ><%= alert["severity"] %></p>
+ 	    <% "Unknown" ->%>
+	    <p style="color: blue;" ><%= alert["severity"] %></p>
             <% end %>
           </div>
           <div class="col-md-3">

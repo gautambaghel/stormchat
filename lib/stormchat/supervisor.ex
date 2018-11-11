@@ -10,6 +10,6 @@ defmodule Stormchat.Supervisor do
        # worker(Stormchat.CallAPI, [])
     ]
 
-    supervise(children, strategy: :one_for_one)
+    # supervise(children, strategy: :one_for_one)
   end
 end

@@ -20,7 +20,7 @@ defmodule Stormchat.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Stormchat.Supervisor]
     Supervisor.start_link(children, opts)
-    Stormchat.Supervisor.start_link
+    # Stormchat.Supervisor.start_link
   end
 
   # Tell Phoenix to update the endpoint configuration
