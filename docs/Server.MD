@@ -79,3 +79,35 @@ vim default
   ```
 
 ## HTTPs Certificate obtained by certbot
+
+https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx
+
+## Deployment
+
+  * mix deps.get --only prod
+  * MIX_ENV=prod mix compile
+  * cd assets && webpack --mode production
+  * mix phx.digest (digested files at "priv/static")
+  * RUN ON PORT: PORT=5100 MIX_ENV=prod mix phx.server
+  * RUN INTERATIVE SHELL: PORT=5100 MIX_ENV=prod iex -S mix phx.server
+  * RUN DETACHED FROM CONSOLE: MIX_ENV=prod PORT=5100 elixir --detached -S mix do compile, phx.server
+  
+  
+```
+# Initial Setup
+$ mix deps.get --only prod
+$ MIX_ENV=prod mix compile
+
+# Compile assets
+$ cd assets && webpack --mode production && cd ..
+
+$ mix phx.digest
+
+# Custom tasks (Like DB migrations)
+$ MIX_ENV=prod mix ecto.migrate
+
+# Finally run the server
+$ PORT=5100 MIX_ENV=prod mix phx.server
+```
+
+  * killing process in port => fuser -k 8080/tcp
