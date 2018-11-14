@@ -11,6 +11,8 @@
             <div class="col-md-3">
               <strong> Severity: &nbsp;</strong>
               <%= case @severity do %>
+	      <% "Unknown" -> %>
+	      <p style="color: blue;" ><%= @severity %></p>
               <% "Severe" -> %>
               <p style="color: red;" ><%= @severity %></p>
               <% "Moderate" ->%>
