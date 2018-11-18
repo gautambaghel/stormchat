@@ -15,9 +15,13 @@ defmodule StormchatWeb.TokenController do
       case Accounts.create_user(user_params) do
         {:ok, user} ->
            token = Phoenix.Token.sign(conn, "auth token", user.id)
+           Accounts.add_authuser_id!(auth, user.id)
+
            conn
+             |> fetch_session
+             |> put_session(:current_user, user.id)
              |> put_status(:created)
-             |> render("token.json", user: user, token: token)
+             |> render("token_mobile.json", user: user, token: token)
         {:error, changeset} ->
            err = StormchatWeb.ChangesetView.translate_errors(changeset)
            conn
