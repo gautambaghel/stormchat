@@ -50,7 +50,7 @@ defmodule Stormchat.Accounts do
     end
   end
 
-  def add_authuser_id!(auth, id) do
+  def update_auth_id!(auth, id) do
     user = Repo.get_by(AuthUser, auth: auth)
     user = Ecto.Changeset.change user, auth_id: Kernel.inspect(id)
     case Repo.update user do

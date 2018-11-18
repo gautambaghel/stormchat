@@ -42,11 +42,13 @@ defmodule StormchatWeb.TokenController do
 
   def new(conn, %{"auth" => auth, "provider" => provider, "name" => name}) do
     case Accounts.get_auth_user!(auth, provider, name) do
-     {:ok, %AuthUser{} = user} ->
-       token = Phoenix.Token.sign(conn, "auth token", user.id)
+     {:ok, %AuthUser{} = authUser} ->
+       email = auth <> "@" <> provider <> ".com"
+       id = if Accounts.get_by_email!(email) == nil, do: "", else: Accounts.get_by_email!(email).id
+       token = Phoenix.Token.sign(conn, "auth token", id)
        conn
           |> put_status(:created)
-          |> render("token_mobile.json", user: user, token: nil)
+          |> render("token_mobile.json",%{user: authUser, token: token, auth_id: id} )
      {:error, err} ->
         conn
           |> put_status(:unprocessable_entity)
@@ -66,7 +68,7 @@ defmodule StormchatWeb.TokenController do
         subscribed: subscribed, location: location, crypted_password: password})
         {:ok, user} = Accounts.add_or_get(changeset, email)
         token = Phoenix.Token.sign(conn, "auth token", user.id)
-        Accounts.add_authuser_id!(auth, user.id)
+        Accounts.update_auth_id!(auth, user.id)
 
         conn
           |> fetch_session
