@@ -12,6 +12,18 @@ defmodule StormchatWeb.TokenView do
     }
   end
 
+  def render("token_mobile.json", %{user: user, token: token, auth_id: auth_id}) do
+    %{
+      user_id: user.id,
+      name: user.name,
+      email: user.email,
+      location: user.location,
+      subscribed: user.subscribed,
+      token: token,
+      auth_id: auth_id,
+    }
+  end
+
   def render("delete_token.json", %{}) do
     %{}
   end

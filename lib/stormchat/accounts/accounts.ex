@@ -39,6 +39,26 @@ defmodule Stormchat.Accounts do
     end
   end
 
+  def add_or_get(changeset, email) do
+    user = Repo.get_by(User, email: email)
+    case user do
+      nil -> case Repo.insert changeset do
+                {:ok, struct}       -> {:ok, struct}
+                {:error, changeset} -> {:error, changeset}
+             end
+      _   -> {:ok, user}
+    end
+  end
+
+  def add_authuser_id!(auth, id) do
+    user = Repo.get_by(AuthUser, auth: auth)
+    user = Ecto.Changeset.change user, auth_id: Kernel.inspect(id)
+    case Repo.update user do
+      {:ok, struct}       -> {:ok, struct}
+      {:error, changeset} -> {:error, changeset}
+    end
+  end
+
   def add_authuser_data!(auth, email, location, subscribed) do
     user = Repo.get_by(AuthUser, auth: auth)
     user = Ecto.Changeset.change user, email: email, location: location, subscribed: get_bool_from_str(subscribed)

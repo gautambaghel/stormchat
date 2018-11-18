@@ -43,10 +43,9 @@ defmodule StormchatWeb.TokenController do
   def new(conn, %{"auth" => auth, "provider" => provider, "name" => name}) do
     case Accounts.get_auth_user!(auth, provider, name) do
      {:ok, %AuthUser{} = user} ->
-        token = Phoenix.Token.sign(conn, "auth token", user.id)
         conn
           |> put_status(:created)
-          |> render("token.json", user: user, token: token)
+          |> render("token.json", user: user, token: nil)
      {:error, err} ->
         conn
           |> put_status(:unprocessable_entity)
@@ -56,17 +55,39 @@ defmodule StormchatWeb.TokenController do
 
   def create(conn, %{"auth" => auth,"email" => email, "location" => location, "subscribed" => subscribed}) do
     case Accounts.add_authuser_data!(auth, email, location, subscribed) do
-     {:ok, %AuthUser{} = user} ->
+     {:ok, %AuthUser{} = authUser} ->
+        # email needs to be unique so auth is good, i know it sucks
+        # but we'll be extracting all the data from AuthUser just Phoenix needs
+        # unique user.id for Token sign in
+        password = gen_password() |> Comeonin.Argon2.hashpwsalt
+        email = auth <> "@" <> authUser.provider <> ".com"
+        changeset = User.changeset(%User{}, %{name: authUser.name, email: email,
+        subscribed: subscribed, location: location, crypted_password: password})
+        {:ok, user} = Accounts.add_or_get(changeset, email)
         token = Phoenix.Token.sign(conn, "auth token", user.id)
+        Accounts.add_authuser_id!(auth, user.id)
+
         conn
           |> put_status(:created)
-          |> render("token.json", user: user, token: token)
+          |> render("token_mobile.json", %{user: authUser, token: token, auth_id: user.id})
      {:error, err} ->
         conn
           |> put_status(:unprocessable_entity)
           |> render("error.json", error: err)
     end
   end
+
+  defp gen_password() do
+    min = String.to_integer("100000", 36)
+    max = String.to_integer("ZZZZZZ", 36)
+
+    max
+    |> Kernel.-(min)
+    |> :rand.uniform()
+    |> Kernel.+(min)
+    |> Integer.to_string(36)
+   end
+
 
   def delete(conn, _params) do
     conn
