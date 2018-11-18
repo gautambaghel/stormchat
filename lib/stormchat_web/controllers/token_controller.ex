@@ -66,9 +66,10 @@ defmodule StormchatWeb.TokenController do
         {:ok, user} = Accounts.add_or_get(changeset, email)
         token = Phoenix.Token.sign(conn, "auth token", user.id)
         Accounts.add_authuser_id!(auth, user.id)
-    
+
         conn
-          |> put_session(:user_id, user.id)
+          |> fetch_session
+          |> put_session(:current_user, user.id)
           |> put_status(:created)
           |> render("token_mobile.json", %{user: authUser, token: token, auth_id: user.id})
      {:error, err} ->
