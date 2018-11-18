@@ -12,7 +12,6 @@ defmodule StormchatWeb.PostController do
   end
 
   def create(conn, %{"post" => post_params}) do
-
     user_id = conn |> fetch_session |> get_session(:current_user) |> Kernel.inspect
     cond do
       post_params["user_id"] != user_id ->
@@ -28,6 +27,28 @@ defmodule StormchatWeb.PostController do
           |> render("show.json", post: post)
         end
     end
+  end
+
+  def mobile(conn, %{"token" => token, "post" => post_params}) do
+    case Phoenix.Token.verify(conn, "auth token", token, max_age: 86400) do
+      {:ok, user_id} ->
+            cond do
+              post_params["user_id"] != Kernel.inspect(user_id) ->
+                IO.inspect({:bad_match, post_params["user_id"], user_id})
+                conn |> render("error.json", msg: "Hax!")
+              true ->
+                with {:ok, %Post{} = post} <- Social.create_post(post_params) do
+                  post = Social.get_post!(post.id)
+                  topic = post.alert
+                  conn
+                  |> put_status(:created)
+                  |> put_resp_header("location", post_path(conn, :show, topic, post))
+                  |> render("show.json", post: post)
+                end
+            end
+      {:error, err} ->
+            conn |> render("error.json", msg: err)
+     end
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do

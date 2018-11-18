@@ -39,6 +39,8 @@ defmodule StormchatWeb.Router do
      pipe_through :api
 
      resources "/posts/:topic", PostController, except: [:new, :edit]
+     post "/posts/mobile/:topic", PostController, :mobile
+
      get "/alerts/:location", PageController, :alert
      get "/alerts/mobile/:location", PageController, :mobile
 

@@ -19,7 +19,7 @@ defmodule StormchatWeb.PostView do
   end
 
   def render("error.json", %{msg: msg}) do
-      %{error: msg}
+      %{msg: msg}
   end
 
 end
