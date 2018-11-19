@@ -85,7 +85,7 @@ defmodule Stormchat.CallAPI do
         "severity" => x["properties"]["severity"],
         "description" => x["properties"]["description"],
         "category" => x["properties"]["category"],
-	"certainty" => x["properties"]["certainty"],
+	      "certainty" => x["properties"]["certainty"],
         "areaDesc" => x["properties"]["areaDesc"],
         "headline" => x["properties"]["headline"]})
       end
@@ -105,14 +105,14 @@ defmodule Stormchat.CallAPI do
     with {:ok, content} <-  HTTPoison.get(final_url, headers,[timeout: 100_000, recv_timeout: 100_000]) do
       data = Poison.decode!(content.body)
       data = data["features"]
-      dataMap = Enum.reduce data, %{}, fn x, acc ->
-        Map.put(acc, x["properties"]["id"],
-        %{"id" => x["properties"]["id"],
-        "event" => x["properties"]["event"],
-        "areaDesc" => x["properties"]["areaDesc"],
-        "headline" => x["properties"]["headline"]})
-      end
-      dataMap
+      dataArr = Enum.reduce data, [], fn x, acc ->
+         acc ++
+          [%{"id" => x["properties"]["id"],
+          "event" => x["properties"]["event"],
+          "areaDesc" => x["properties"]["areaDesc"],
+          "headline" => x["properties"]["headline"]}]
+        end
+      dataArr
     else
       err ->
         IO.inspect(err)
