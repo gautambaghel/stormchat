@@ -29,8 +29,9 @@ defmodule StormchatWeb.PostController do
     end
   end
 
+  # 8640000 -> 100 days
   def mobile(conn, %{"token" => token, "post" => post_params}) do
-    case Phoenix.Token.verify(conn, "auth token", token, max_age: 86400) do
+    case Phoenix.Token.verify(conn, "auth token", token, max_age: 8640000) do
       {:ok, user_id} ->
             cond do
               post_params["user_id"] != Kernel.inspect(user_id) ->
