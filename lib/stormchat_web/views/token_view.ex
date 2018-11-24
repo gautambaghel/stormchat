@@ -20,7 +20,7 @@ defmodule StormchatWeb.TokenView do
       email: user.email,
       location: user.location,
       subscribed: user.subscribed,
-      provider: user.providedr,
+      provider: user.provider,
       auth: user.auth,
       auth_id: auth_id,
     }
