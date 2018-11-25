@@ -28,6 +28,12 @@ defmodule Stormchat.Accounts do
     Repo.get_by(AuthUser, email: email)
   end
 
+  def update_user_details!(user, attrs) do
+    user
+      |> User.changeset(attrs)
+      |> Repo.update()
+  end
+
   def get_auth_user!(auth, provider, name) do
     user = Repo.get_by(AuthUser, auth: auth)
     case user do

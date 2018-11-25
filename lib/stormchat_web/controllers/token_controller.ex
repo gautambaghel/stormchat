@@ -26,6 +26,35 @@ defmodule StormchatWeb.TokenController do
       end
   end
 
+  def edit(conn, %{"name"=> name, "email" => email, "token" => token,
+      "user_id" =>  userid, "location" => location, "subscribe" => subscribe}) do
+      case Phoenix.Token.verify(conn, "auth token", token, max_age: 8640000) do
+        {:ok, user_id} ->
+            cond do
+              userid != Kernel.inspect(user_id) ->
+                     IO.inspect({:bad_match, userid, user_id})
+                     conn |> render("error.json", msg: "Hax!")
+              true ->
+                with user <- Accounts.get_by_id!(user_id) do
+                     attrs = %{"name"=> name, "email" => email,
+                               "location" => location, "subscribed" => subscribe}
+                     with {:ok, user} <- Accounts.update_user_details!(user, attrs) do
+                       token = Phoenix.Token.sign(conn, "auth token", user.id)
+                       conn
+                         |> put_status(:created)
+                         |> render("token.json", user: user, token: token)
+                     else
+                       err ->
+                         conn |> render("error.json", msg: Kernel.inspect(err))
+                     end
+                end
+            end
+
+        {:error, err} ->
+            conn |> render("error.json", msg: Kernel.inspect(err))
+      end
+  end
+
   def create(conn, %{"email" => email, "password" => password}) do
     case Accounts.get_and_auth_user(email, password) do
      {:ok, %User{} = user} ->

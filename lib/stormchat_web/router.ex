@@ -45,6 +45,7 @@ defmodule StormchatWeb.Router do
      get "/alerts/mobile/:location", PageController, :mobile
 
      post "/new_user", TokenController, :new
+     post "/edit_user", TokenController, :edit
      post "/token", TokenController, :create
      delete "/token", TokenController, :delete
   end
