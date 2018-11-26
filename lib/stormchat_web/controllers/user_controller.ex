@@ -41,7 +41,9 @@ defmodule StormchatWeb.UserController do
           |> put_session(:current_user, user.id)
           |> put_flash(:info, ["Your account was created", " ", user.name])
           |> redirect(to: "/")
-      {:error, changeset} ->conn
+      {:error, changeset} ->
+         IO.inspect(changeset) 
+         conn
           |> put_flash(:info, "Unable to create account")
           |> render("new.html", changeset: changeset, locations: locations)
     end

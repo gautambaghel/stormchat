@@ -18,10 +18,10 @@ defmodule Stormchat.Accounts.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :crypted_password, :name, :location, :subscribed])
-    |> validate_required([:email, :name, :location])
+    |> cast(params, [:email, :password, :crypted_password, :name, :location, :subscribed])
+    |> validate_required([:email, :name, :location, :password])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
-    |> validate_length(:crypted_password, min: 5)
+    |> validate_length(:password, min: 5)
   end
 end
