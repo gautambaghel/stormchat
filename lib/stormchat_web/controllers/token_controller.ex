@@ -20,15 +20,7 @@ defmodule StormchatWeb.TokenController do
              |> render("token.json", user: user, token: token)
         {:error, changeset} ->
            err = StormchatWeb.ChangesetView.translate_errors(changeset)
-           errorAcc = ""
-           error = Enum.map  err,  fn {k, v} ->
-             errorAcc = errorAcc <>  Kernel.inspect(k) <> " "
-             q = Enum.reduce(v, "", fn(x, acc) -> x <> acc end)
-             errorAcc <> q
-           end
-             error = Enum.reduce(error, "", fn(x, acc) -> x <> " and " <> acc end)
-             error = String.replace(error, ":", "")
-             error = String.slice(error, 0..-6)
+           error = convert_error_to_string(err)
            conn
              |> put_status(:unprocessable_entity)
              |> render("error.json", error: error)
@@ -49,14 +41,19 @@ defmodule StormchatWeb.TokenController do
                 with user <- Accounts.get_by_id!(user_id) do
                      attrs = %{"name"=> name, "email" => email, "password" => "dummy_password",
                                "location" => location, "subscribed" => subscribed}
-                     with {:ok, user} <- Accounts.update_user_details!(user, attrs) do
-                       token = Phoenix.Token.sign(conn, "auth token", user.id)
-                       conn
-                         |> put_status(:created)
-                         |> render("token.json", user: user, token: token)
-                     else
-                       err ->
-                         conn |> render("error.json", error: err)
+                         
+                     case Accounts.update_user_details!(user, attrs) do
+                       {:ok, user} ->
+                         token = Phoenix.Token.sign(conn, "auth token", user.id)
+                         conn
+                           |> put_status(:created)
+                           |> render("token.json", user: user, token: token)
+                       {:error, changeset} ->
+                           err = StormchatWeb.ChangesetView.translate_errors(changeset)
+                           error = convert_error_to_string(err)
+                           conn
+                             |> put_status(:unprocessable_entity)
+                             |> render("error.json", error: error)
                      end
                 end
             end
@@ -132,6 +129,18 @@ defmodule StormchatWeb.TokenController do
     |> Kernel.+(min)
     |> Integer.to_string(36)
    end
+   
+  defp convert_error_to_string() do 
+     errorAcc = ""
+     error = Enum.map  err,  fn {k, v} ->
+       errorAcc = errorAcc <>  Kernel.inspect(k) <> " "
+       q = Enum.reduce(v, "", fn(x, acc) -> x <> acc end)
+       errorAcc <> q
+     end
+       error = Enum.reduce(error, "", fn(x, acc) -> x <> " and " <> acc end)
+       error = String.replace(error, ":", "")
+       error = String.slice(error, 0..-6)
+  end
 
 
   def delete(conn, _params) do
