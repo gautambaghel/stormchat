@@ -102,7 +102,7 @@ defmodule StormchatWeb.TokenController do
         password = gen_password() |> Comeonin.Argon2.hashpwsalt
         email = auth <> "@" <> authUser.provider <> ".com"
         changeset = User.changeset(%User{}, %{name: authUser.name, email: email,
-        subscribed: subscribed, location: location, crypted_password: password})
+        subscribed: subscribed, location: location, password: password})
         {:ok, user} = Accounts.add_or_get(changeset, email)
         token = Phoenix.Token.sign(conn, "auth token", user.id)
         Accounts.update_auth_id!(auth, user.id)
