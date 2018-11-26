@@ -42,7 +42,7 @@ defmodule StormchatWeb.UserController do
           |> put_flash(:info, ["Your account was created", " ", user.name])
           |> redirect(to: "/")
       {:error, changeset} ->
-         IO.inspect(changeset) 
+         IO.inspect(changeset)
          conn
           |> put_flash(:info, "Unable to create account")
           |> render("new.html", changeset: changeset, locations: locations)
@@ -51,14 +51,14 @@ defmodule StormchatWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
   user = Accounts.get_by_id!(id)
-
+  locations = Locations.list_locations
   case Accounts.update_user(user, user_params) do
     {:ok, user} ->
       conn
       |> put_flash(:info, ["Your account was updated successfully", " ", user.name])
       |> redirect(to: page_path(conn, :index))
     {:error, %Ecto.Changeset{} = changeset} ->
-      render(conn, "edit.html", user: user, changeset: changeset)
+      render(conn, "edit.html", user: user, changeset: changeset, locations: locations)
   end
 end
 

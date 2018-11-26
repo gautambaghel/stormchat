@@ -16,14 +16,16 @@
           <div class="col-md-3">
             <strong> Severity: &nbsp;</strong>
             <%= case alert["severity"] do %>
-            <% "Severe" -> %>
+            <% "Extreme" -> %>
             <p style="color: red;" ><%= alert["severity"] %></p>
-            <% "Moderate" ->%>
+            <% "Severe" -> %>
             <p style="color: orange;" ><%= alert["severity"] %></p>
-            <% "Minor" ->%>
+            <% "Moderate" ->%>
             <p style="color: green;" ><%= alert["severity"] %></p>
- 	    <% "Unknown" ->%>
-	    <p style="color: blue;" ><%= alert["severity"] %></p>
+            <% "Minor" ->%>
+            <p style="color: blue;" ><%= alert["severity"] %></p>
+       	    <% "Unknown" ->%>
+      	    <p style="color: grey;" ><%= alert["severity"] %></p>
             <% end %>
           </div>
           <div class="col-md-3">
