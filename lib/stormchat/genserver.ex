@@ -110,7 +110,8 @@ defmodule Stormchat.CallAPI do
           [%{"id" => x["properties"]["id"],
           "event" => x["properties"]["event"],
           "areaDesc" => x["properties"]["areaDesc"],
-          "headline" => x["properties"]["headline"]}]
+          "headline" => x["properties"]["headline"],
+	  "severity" => x["properties"]["severity"]}]
         end
       dataArr
     else
