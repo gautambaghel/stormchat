@@ -34,9 +34,11 @@ defmodule StormchatWeb.TokenController do
              |> render("error.json", error: error)
       end
   end
-
+  
+  # We don't need the password again, we verify the user via token, but schema
+  # requires password so we need to user a dummy password, no actual changes though
   def edit(conn, %{"name"=> name, "email" => email, "token" => token,
-      "user_id" =>  userid, "location" => location, "subscribe" => subscribe}) do
+      "user_id" =>  userid, "location" => location, "subscribed" => subscribed}) do
       case Phoenix.Token.verify(conn, "auth token", token, max_age: 8640000) do
         {:ok, user_id} ->
             cond do
@@ -45,8 +47,8 @@ defmodule StormchatWeb.TokenController do
                      conn |> render("error.json", msg: "Hax!")
               true ->
                 with user <- Accounts.get_by_id!(user_id) do
-                     attrs = %{"name"=> name, "email" => email,
-                               "location" => location, "subscribed" => subscribe}
+                     attrs = %{"name"=> name, "email" => email, "password" => "dummy_password",
+                               "location" => location, "subscribed" => subscribed}
                      with {:ok, user} <- Accounts.update_user_details!(user, attrs) do
                        token = Phoenix.Token.sign(conn, "auth token", user.id)
                        conn
@@ -54,13 +56,13 @@ defmodule StormchatWeb.TokenController do
                          |> render("token.json", user: user, token: token)
                      else
                        err ->
-                         conn |> render("error.json", msg: Kernel.inspect(err))
+                         conn |> render("error.json", error: err)
                      end
                 end
             end
 
         {:error, err} ->
-            conn |> render("error.json", msg: Kernel.inspect(err))
+            conn |> render("error.json", error: err)
       end
   end
 
