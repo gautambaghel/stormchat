@@ -130,16 +130,16 @@ defmodule StormchatWeb.TokenController do
     |> Integer.to_string(36)
    end
    
-  defp convert_error_to_string() do 
+  defp convert_error_to_string(err) do 
      errorAcc = ""
      error = Enum.map  err,  fn {k, v} ->
        errorAcc = errorAcc <>  Kernel.inspect(k) <> " "
        q = Enum.reduce(v, "", fn(x, acc) -> x <> acc end)
        errorAcc <> q
      end
-       error = Enum.reduce(error, "", fn(x, acc) -> x <> " and " <> acc end)
-       error = String.replace(error, ":", "")
-       error = String.slice(error, 0..-6)
+     error = Enum.reduce(error, "", fn(x, acc) -> x <> " and " <> acc end)
+     error = String.replace(error, ":", "")
+     error = String.slice(error, 0..-6)
   end
 
 
