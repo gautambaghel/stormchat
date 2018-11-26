@@ -22,6 +22,7 @@ defmodule Stormchat.Accounts.User do
     |> validate_required([:email, :name, :location, :password])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
+    |> validate_length(:location, max: 2, min: 2)
     |> validate_length(:password, min: 5)
   end
 end

@@ -20,9 +20,18 @@ defmodule StormchatWeb.TokenController do
              |> render("token.json", user: user, token: token)
         {:error, changeset} ->
            err = StormchatWeb.ChangesetView.translate_errors(changeset)
+           errorAcc = ""
+           error = Enum.map  err,  fn {k, v} ->
+             errorAcc = errorAcc <>  Kernel.inspect(k) <> " "
+             q = Enum.reduce(v, "", fn(x, acc) -> x <> acc end)
+             errorAcc <> q
+           end
+             error = Enum.reduce(error, "", fn(x, acc) -> x <> " and " <> acc end)
+             error = String.replace(error, ":", "")
+             error = String.slice(error, 0..-6)
            conn
              |> put_status(:unprocessable_entity)
-             |> render("error.json", error: err)
+             |> render("error.json", error: error)
       end
   end
 
