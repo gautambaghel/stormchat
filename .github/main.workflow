@@ -24,7 +24,7 @@ action "Create Release" {
   needs = ["Compile"]
   uses = "./elixir-cli"
   env = {
-      MIX_ENV = dev
+      MIX_ENV = "dev"
   }
   args = ["release"]
 }
