@@ -31,7 +31,7 @@ action "Create Release" {
 
 action "Synopsys detect" {
   needs = ["Create Release"]
-  uses = "https://github.com/gautambaghel/ducky-crm/actions-detect@master"
+  uses = "gautambaghel/ducky-crm/actions-detect@master"
   secrets = ["BLACKDUCK_API_TOKEN", "BLACKDUCK_URL"]
   args = "--detect.tools=SIGNATURE_SCAN --detect.project.name=$GITHUB_REPOSITORY"
 }
