@@ -17,7 +17,7 @@ action "Clean" {
 action "Compile" {
   needs = ["Clean"]
   uses = "./elixir-cli"
-  args = ["compile"]
+  args = ["do compile"]
 }
 
 action "Create Release" {
