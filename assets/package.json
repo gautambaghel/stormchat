@@ -6,7 +6,7 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
-    "bootstrap": "^4.1.2",
+    "bootstrap": "^4.3.1",
     "deep-freeze": "0.0.1",
     "jquery": "^3.3.1",
     "nodemailer": "^4.6.4",
