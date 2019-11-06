@@ -8,7 +8,7 @@
   "dependencies": {
     "bootstrap": "^4.1.2",
     "deep-freeze": "0.0.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "nodemailer": "^4.6.4",
     "nodemailer-mailgun-transport": "^1.4.0",
     "phoenix": "file:../deps/phoenix",
